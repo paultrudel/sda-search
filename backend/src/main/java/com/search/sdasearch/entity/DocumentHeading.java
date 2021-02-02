@@ -14,7 +14,7 @@ import javax.persistence.*;
 /*                                    */
 /**************************************/
 
-@Entity // Annotate class JPA entity
+@Entity // Annotate class as JPA entity
 @Table(name = "document_heading") // Annotate the table corresponding to the entity
 @Data // Lombok annotation to automatically generate boilerplate code
 public class DocumentHeading {
