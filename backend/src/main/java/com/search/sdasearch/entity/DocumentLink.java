@@ -14,8 +14,8 @@ import javax.persistence.*;
 /*                                    */
 /**************************************/
 
-@Entity // Anotate class as JPA entity
-@Table(name = "document_link") // Anotate table corresponding to the entity
+@Entity // Annotate class as JPA entity
+@Table(name = "document_link") // Annotate table corresponding to the entity
 @Data // Lombok annotation to automatically generate boilderplate code
 public class DocumentLink {
 
