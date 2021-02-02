@@ -1,0 +1,30 @@
+@import '../../../shared/shared.scss';
+
+.document-item {
+    margin: 1rem;
+    text-decoration: none;
+}
+
+.document-item__title {
+    text-align: left;
+    font-weight: bold;
+    padding: 0.5rem;
+}
+
+.document-item__summary {
+    text-align: left;
+    padding: 0.5rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+
+    p {
+        margin: 0;
+    }
+}
+
+.document-item__score {
+    text-align: left;
+    padding: 0.5rem;
+}

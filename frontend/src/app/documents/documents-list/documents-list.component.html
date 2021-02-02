@@ -1,0 +1,24 @@
+<div *ngIf="isLoading" style="text-align: center;">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+<div class="documents-list">
+    <app-document-item *ngFor="let document of documents" [document]="document">
+    </app-document-item>
+</div>
+<div class="documents-list__pagination">
+    <div class="documents-list__pagination--pagenumber">
+        <ngb-pagination [(page)]="pageNumber" [pageSize]="pageSize" [collectionSize]="totalElements" [maxSize]="5"
+            [boundaryLinks]="true" (pageChange)="onPageChange()">
+        </ngb-pagination>
+    </div>
+    <div class="documents-list__pagination--pagesize">
+        <span class="mr-2">Page Size</span>
+        <select (change)="updatePageSize($event.target.value)">
+            <option>2</option>
+            <option selected="true">5</option>
+            <option>10</option>
+            <option>20</option>
+            <option>50</option>
+        </select>
+    </div>
+</div>

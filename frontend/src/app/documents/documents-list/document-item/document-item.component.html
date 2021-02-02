@@ -1,0 +1,11 @@
+<a class="document-item" href="{{ document.url }}" target="_blank">
+    <div class="document-item__title">
+        <h1>{{  document.title }}</h1>
+    </div>
+    <div class="document-item__summary">
+        <p>{{ document.documentSummary }}</p>
+    </div>
+    <div *ngIf="document.queryScore != 0" class="document-item__score">
+        <p>Query Score: {{  document.queryScore }}</p>
+    </div>
+</a>

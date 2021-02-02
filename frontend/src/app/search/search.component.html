@@ -1,0 +1,17 @@
+<section class="search">
+    <div class="search-title">
+        <h1 class="search-title__text">Searchable Document Archive</h1>
+    </div>
+    <div class="search-input">
+        <input 
+            #searchInput 
+            type="text" 
+            class="search-input__field"
+            placeholder="Seach for documents"
+            (keyup.enter)="onSearchDocuments(searchInput.value)">
+    </div>
+    <div class="search-buttons">
+        <button class="search-buttons__search" (click)="onSearchDocuments(searchInput.value)">Search Documents</button>
+        <button class="search-buttons__all" (click)="onSearchDocuments('')">View All Documents</button>
+    </div>
+</section>

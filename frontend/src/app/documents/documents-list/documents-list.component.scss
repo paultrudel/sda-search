@@ -1,0 +1,11 @@
+@import '../../shared/shared.scss';
+
+.documents-list__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.documents-list__pagination--pagenumber {
+    margin-top: 1rem;
+}

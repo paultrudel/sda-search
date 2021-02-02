@@ -1,0 +1,41 @@
+@import "../shared/shared.scss";
+
+.search {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-title__text {
+    font-size: 2rem;
+}
+
+.search-input {
+    width: 30%;
+    margin: 1rem;
+}
+
+.search-input__field {
+    width: 100%;
+    padding: 0.3rem;
+}
+
+.search-buttons button {
+    color: white;
+    background: map-get($colours, primary);
+    margin: 0.5rem;
+    border-radius: 8px;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover {
+        color: map-get($colours, primary);
+        background: white;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
