@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 /*  Program: SDA-Search               */
 /*  Author: Paul Trudel               */
 /*                                    */
-/*  JPA repository for the            */
-/*  DocumentParagraph entity          */
+/*  Spring Data JPA repository for    */
+/*  the DocumentParagraph entity      */
 /*                                    */
 /**************************************/
 
