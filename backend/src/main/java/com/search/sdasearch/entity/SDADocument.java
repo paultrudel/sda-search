@@ -8,8 +8,19 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "sda_document")
+/**************************************/
+/*                                    */
+/*  Program: SDA-Search               */
+/*  Author: Paul Trudel               */
+/*                                    */
+/*  Class which defines the           */
+/*  SDADocument entity                */
+/*                                    */
+/**************************************/
+
+@Entity  // Annotate class as JPA entity
+@Table(name = "sda_document") // Annotate table corresponding to entity
+//Lombok annotations to automatically generate boilerplate code
 @Getter
 @Setter
 public class SDADocument {
@@ -17,7 +28,7 @@ public class SDADocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Long id; // Entity primary key
 
     @Column(name = "url")
     private String url;
@@ -39,24 +50,25 @@ public class SDADocument {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "document")
     @JsonIgnore
-    private Set<DocumentHeading> headings;
+    private Set<DocumentHeading> headings; // Define One-to-Many relationship between SDADocument and DocumentHeading entities
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "document")
     @JsonIgnore
-    private Set<DocumentParagraph> paragraphs;
+    private Set<DocumentParagraph> paragraphs; // Define One-to-Many relationship between SDADocument and DocumentParagraph entities
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "document")
     @JsonIgnore
-    private Set<DocumentLink> links;
+    private Set<DocumentLink> links; // Define One-to-Many relationship between SDADocument and DocumentLink entities
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "document")
     @JsonIgnore
-    private Set<DocumentMetadata> metadata;
+    private Set<DocumentMetadata> metadata; // Define One-to-Many relationship between SDADocument and DocumentMetadata entities
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "document")
     @JsonIgnore
-    private Set<DocumentImage> images;
+    private Set<DocumentImage> images; // Define One-to-Many relationship between SDADocument and DocumentImage entities
 
+    // Add a DocumentHeading to SDADocument
     public void addHeading(DocumentHeading documentHeading) {
         if(headings == null) {
             headings = new HashSet<>();
@@ -65,6 +77,7 @@ public class SDADocument {
         documentHeading.setDocument(this);
     }
 
+    // Add a DocumentImage to SDADocument
     public void addImage(DocumentImage documentImage) {
         if(images == null) {
             images = new HashSet<>();
@@ -73,6 +86,7 @@ public class SDADocument {
         documentImage.setDocument(this);
     }
 
+    // Add a DocumentLink to SDADocument
     public void addLink(DocumentLink documentLink) {
         if(links == null) {
             links = new HashSet<>();
@@ -81,6 +95,7 @@ public class SDADocument {
         documentLink.setDocument(this);
     }
 
+    // Add a DocumentMetadata to SDADocument
     public void addMetadata(DocumentMetadata documentMetadata) {
         if(metadata == null) {
             metadata = new HashSet<>();
@@ -89,6 +104,7 @@ public class SDADocument {
         documentMetadata.setDocument(this);
     }
 
+    // Add a DocumentParagraph to SDADocument
     public void addParagraph(DocumentParagraph documentParagraph) {
         if(paragraphs == null) {
             paragraphs = new HashSet<>();
