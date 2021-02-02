@@ -4,15 +4,25 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "document_image")
-@Data
+/**************************************/
+/*                                    */
+/*  Program: SDA-Search               */
+/*  Author: Paul Trudel               */
+/*                                    */
+/*  Class defining the DocumentImage  */
+/*  entity                            */
+/*                                    */
+/**************************************/
+
+@Entity // Anotate class as JPA entity
+@Table(name = "document_image") // Anotate the table corresponding to the entity
+@Data // Lombok annotation to automatically generate boilerplate code
 public class DocumentImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Long id; // Entity primary key
 
     @Column(name = "link")
     private String link;
@@ -22,5 +32,5 @@ public class DocumentImage {
 
     @ManyToOne
     @JoinColumn(name = "document_id")
-    private SDADocument document;
+    private SDADocument document; // Define Many-to-One relationship between DocumentImage and SDADocument entities 
 }
