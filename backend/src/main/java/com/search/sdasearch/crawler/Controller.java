@@ -13,21 +13,31 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+/**************************************/
+/*                                    */
+/*  Program: SDA-Search               */
+/*  Author: Paul Trudel               */
+/*                                    */
+/*  Class responsible for handling    */
+/*  the web crawler configuration     */
+/*                                    */
+/**************************************/
+
 public class Controller {
 
     private static final Logger logger = LoggerFactory.getLogger(Controller.class);
 
     public static void main(String args[]) throws Exception {
-        SDASetup.setup();
+        SDASetup.setup(); // Initialze the required directories
 
-        CrawlConfig config = new CrawlConfig();
-        config.setCrawlStorageFolder(SDASetup.STORAGE);
-        config.setPolitenessDelay(1000);
-        config.setMaxDepthOfCrawling(2);
-        config.setMaxPagesToFetch(10000);
-        config.setIncludeHttpsPages(true);
-        config.setResumableCrawling(true);
-        config.setIncludeBinaryContentInCrawling(false);
+        CrawlConfig config = new CrawlConfig(); // Create new crawler configuration
+        config.setCrawlStorageFolder(SDASetup.STORAGE); // Set the crawler storage folder
+        config.setPolitenessDelay(1000); // Set the delay between requests sent to the same domain
+        config.setMaxDepthOfCrawling(2); // Set the depth that crawler should go to from the root url
+        config.setMaxPagesToFetch(10000); // Set the maximum number of web pages to be fetched
+        config.setIncludeHttpsPages(true); // Include Https domains
+        config.setResumableCrawling(true); // Resume the crawl in the cause of a crash or manual stoppage
+        config.setIncludeBinaryContentInCrawling(false); // Do not crawl binary content (images, documents, etc.)
 
         PageFetcher pf = new PageFetcher(config);
         RobotstxtConfig robotsConfig = new RobotstxtConfig();
@@ -38,22 +48,27 @@ public class Controller {
         );
 
 
+        // List of root domains from which to start the crawl
         List<String> crawlDomains = ImmutableList.of(
                 "https://en.wikipedia.org/wiki/Artificial_general_intelligence",
                 "https://en.wikipedia.org/wiki/Ray_Kurzweil",
                 "https://en.wikipedia.org/wiki/Ben_Goertzel"
         );
+        
+        // Add the seed (root) domains to the controller
         for(String domain: crawlDomains) {
             controller.addSeed(domain);
         }
 
+        // Initialize the user created crawler type
         CrawlController.WebCrawlerFactory<SDACrawler> factory = () ->
                 new SDACrawler();
-        int numCrawlers = 1;
+        int numCrawlers = 1; // Number of crawlers to run simultaneously
 
         logger.info("========== Crawler Started ==========");
-        controller.start(factory, numCrawlers);
+        controller.start(factory, numCrawlers); // Start the crawl
 
+        // Export the crawl graph when crawling is completed
         if(controller.isFinished()) {
             logger.info("========== Crawler Finished ==========");
             CrawlGraph.getInstance().exportGraph();
