@@ -2,6 +2,15 @@ package com.search.sdasearch.utility;
 
 import java.io.File;
 
+/**************************************/
+/*                                    */
+/*  Program: SDA-Search               */
+/*  Author: Paul Trudel               */
+/*                                    */
+/*  Sets up the necessary directories */
+/*                                    */
+/**************************************/
+
 public class SDASetup {
     public static final String DIRECTORY = System.getProperty("user.home");
     public static final String CRAWL = DIRECTORY + "\\Crawler";
