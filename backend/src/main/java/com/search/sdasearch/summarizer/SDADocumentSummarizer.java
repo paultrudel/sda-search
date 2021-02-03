@@ -170,7 +170,7 @@ public class SDADocumentSummarizer {
             }
         }
 
-        Collections.sort(documentSummary, new SentenceNumberComparator()); // Sort the document summary by sentence score
+        Collections.sort(documentSummary, new SentenceNumberComparator()); // Sort the document summary by sentence order in the document
     }
 
     // Collection all of the sentence text together into one string
