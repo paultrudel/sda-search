@@ -2,6 +2,17 @@ package com.search.sdasearch.summarizer;
 
 import java.util.Comparator;
 
+/**************************************/
+/*                                    */
+/*  Program: SDA-Search               */
+/*  Author: Paul Trudel               */
+/*                                    */
+/*  Compare sentences based on the    */
+/*  the order they appear in a body   */
+/*  of text                           */
+/*                                    */
+/**************************************/
+
 public class SentenceNumberComparator implements Comparator<Sentence> {
 
     @Override
