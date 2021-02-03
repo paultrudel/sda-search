@@ -2,7 +2,17 @@ package com.search.sdasearch.summarizer;
 
 import lombok.Data;
 
-@Data
+/**************************************/
+/*                                    */
+/*  Program: SDA-Search               */
+/*  Author: Paul Trudel               */
+/*                                    */
+/*  Representation of a sentence in a */
+/*  body of text                      */
+/*                                    */
+/**************************************/
+
+@Data // Lombok annotation to generate boilerplate code
 public class Sentence {
 
     private int paragraphNumber;
