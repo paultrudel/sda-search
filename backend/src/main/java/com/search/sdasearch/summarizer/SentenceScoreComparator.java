@@ -2,6 +2,16 @@ package com.search.sdasearch.summarizer;
 
 import java.util.Comparator;
 
+/**************************************/
+/*                                    */
+/*  Program: SDA-Search               */
+/*  Author: Paul Trudel               */
+/*                                    */
+/*  Compare sentences based on their  */
+/*  intersection score                */
+/*                                    */
+/**************************************/
+
 public class SentenceScoreComparator implements Comparator<Sentence> {
 
     @Override
