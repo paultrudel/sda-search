@@ -36,4 +36,26 @@ The advatage of storing information this way is that the memory needed for stora
 
 ## Retrieving the Content
 
-The process of querying the index to search for relevant content is the most complex aspect of a search engine and the one that has the most variey in the way it can be approached. Large scale seach engines such as Google use hundreds of factors in their search process to determine what content is relevant to a user's search. The search engine in this project uses two factors, TF-IDF and PageRank scores.
+The process of querying the index to search for relevant content is the most complex aspect of a search engine and the one that has the most variey in the way it can be approached. Large scale seach engines such as Google use hundreds of factors in their search process to determine what content is relevant to a user's query. The search engine in this project uses two factors, TF-IDF and PageRank scores.
+
+### Boolean Model
+
+One of the most basic ways of identifying potentially relevant documents from the index is to use boolean queries to check for the prescence or abscence of query terms in a document. The use of keywords such as "and", "or", and "not" are used to join terms in a query. The problem with this model is that it either returns too few results if the terms are joined by "and", or too many results if terms are joined by "or". Another issue is that a boolean query simply returns a set of documents matching the query, these documents have no ordering in terms of how relevant one document is to another.
+
+### Ranked Retrieval
+
+Instead of returning a set of documents satisfying a query return an ordering of the top documents from the collection for the query. This deals with the problem of too many results since only the top 10 or 100 documents for instance will be returned. This introduces the problem of how to score documents with term frequency and weighting being the most fundamental method of doing so.
+The simplest way to score a document is to compute the score of as the frequency, or the number of times, the query term in the document. The problem is that document relevancy does not increase proportionally with term frequency. Another issue is that not all terms are equal, some terms have little or no impact in determining relevance. The solution is to measure the term frequency using the inverse document frequency and ultimately score the document using its tf-idf weight.
+
+
+![IR_Equations]
+
+
+The tf-idf weight is the best known weighting scheme for information retrieval. 
+
+
+
+
+
+
+[IR_Equations]: https://latex.codecogs.com/gif.latex?idf_t%20%3D%20log%28N/df_t%29%20%5C%5C%20%5Cindent%20w_%7Bt%2Cd%7D%20%3D%20log%281%20&plus;%20tf_%7Bt%2Cd%7D%29%20%5Ctimes%20log%28N/df_t%29%20%5C%5C%20%5C%5C%20%5Cindent%20N%20%3D%20the%5C%2Cnumber%5C%2Cof%5C%2Cdocuments%5C%2Cin%5C%2Cthe%5C%2Ccorpus%20%5C%5C%20%5Cindent%20df_t%20%3D%20number%5C%2Cof%20%5C%2Cdocuments%5C%2Cwhich%5C%2Ccontain%5C%2Cterm%5C%3At%20%5C%5C%20%5Cindent%20tf_%7Bt%2Cd%7D%20%3D%20frequency%5C%2Cof%5C%2Cterm%5C%3At%5C%3Ain%5C%2Cdocument%5C%3Ad%20%5C%5C%20%5Cindent%20idf_t%20%3D%20inverse%5C%2Cdocument%5C%2Cfrequence%5C%2Cof%5C%2Cterm%5C%3At%20%5C%5C%20%5Cindent%20w_%7Bt%2Cd%7D%20%3D%20tf%5C%21%5C%21-%5C%21%5C%21idf%5C%3Aweight%5C%2Cof%5C%2Ca%5C%2Cterm
