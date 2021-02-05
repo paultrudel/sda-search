@@ -61,7 +61,7 @@ Each document in the corpus can be viewed as an N-dimensional vector, where N is
 
 ### Scoring Documents
 
-The set of documents are seen as a set of vectors in a vector space and the user query itself is represented a vector in this space. Documents are ranked in terms of their angle between the document and query vectors. Documents can either be ranked in decreasing order of their angle or increasing order of the cosine of their angle. The angle between a document and the query will vary between 0 and 90 degrees, with 0 degrees indicating a perfect match between a document and the query, and 90 degrees indicating that vectors are orthogonal and therefore have no similarity.
+The set of documents are seen as a set of vectors in a vector space and the user query itself is represented a vector in this space. Documents are ranked in terms of their angle between the document and query vectors. Documents can either be ranked in decreasing order of their angle or increasing order of the cosine of their angle. The angle between a document and the query will vary between 0 and 90 degrees, with 0 degrees indicating a perfect match between a document and the query, and 90 degrees indicating that the vectors are orthogonal and therefore have no similarity.
 
 ![Cosine_Similarity]
 
