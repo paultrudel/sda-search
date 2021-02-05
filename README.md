@@ -59,8 +59,16 @@ The tf-idf weight is the best known weighting scheme for information retrieval.
 Each document in the corpus can be viewed as an N-dimensional vector, where N is the number of distinct terms, with each entry in the vector being a tf-idf weight. Any term that does not appear in the document will have a weight of zero in the corresponding vector entry. To improve the speed of computations, in practice only terms appearing in the user's query are considered. Therefore, each document is viewed as a Q-dimensional vector, where Q is the number of distinct terms in the query.
 
 
+### Scoring Documents
+
+The set of documents are seen as a set of vectors in a vector space and the user query itself is represented a vector in this space. Documents are ranked in terms of their angle between the document and query vectors. Documents can either be ranked in decreasing order of their angle or increasing order of the cosine of their angle. The angle between a document and the query will vary between 0 and 90 degrees, with 0 degrees indicating a perfect match between a document and the query, and 90 degrees indicating that vectors are orthogonal and therefore have no similarity.
+
+![Cosine_Similarity]
+
 
 
 
 
 [IR_Equations]: https://latex.codecogs.com/gif.latex?idf_t%20%3D%20log%28N/df_t%29%20%5C%5C%20%5Cindent%20w_%7Bt%2Cd%7D%20%3D%20log%281%20&plus;%20tf_%7Bt%2Cd%7D%29%20%5Ctimes%20log%28N/df_t%29%20%5C%5C%20%5C%5C%20%5Cindent%20N%20%3D%20the%5C%2Cnumber%5C%2Cof%5C%2Cdocuments%5C%2Cin%5C%2Cthe%5C%2Ccorpus%20%5C%5C%20%5Cindent%20df_t%20%3D%20number%5C%2Cof%20%5C%2Cdocuments%5C%2Cwhich%5C%2Ccontain%5C%2Cterm%5C%3At%20%5C%5C%20%5Cindent%20tf_%7Bt%2Cd%7D%20%3D%20frequency%5C%2Cof%5C%2Cterm%5C%3At%5C%3Ain%5C%2Cdocument%5C%3Ad%20%5C%5C%20%5Cindent%20idf_t%20%3D%20inverse%5C%2Cdocument%5C%2Cfrequence%5C%2Cof%5C%2Cterm%5C%3At%20%5C%5C%20%5Cindent%20w_%7Bt%2Cd%7D%20%3D%20tf%5C%21%5C%21-%5C%21%5C%21idf%5C%3Aweight%5C%2Cof%5C%2Ca%5C%2Cterm
+
+[Cosine_Similarity]: https://latex.codecogs.com/gif.latex?cos%28%5Cvec%7Bq%7D%2C%5Cvec%7Bd%7D%29%3D%5Cfrac%7B%5Cvec%7Bq%7D%20%5Cbullet%20%5Cvec%7Bd%7D%7D%7B%7C%7C%5Cvec%7Bq%7D%7C%7C%5C%3A%7C%7C%5Cvec%7Bd%7D%7C%7C%7D%3D%5Cfrac%7B%5Csum_%7Bi%3D1%7D%5E%7B%7Cq%7C%7D%20q_i%5C%2Cd_i%7D%7B%5Csqrt%7B%5Csum_%7Bi%3D1%7D%5E%7B%7Cq%7C%7Dq_i%5E2%7D%5Csqrt%7B%5Csum_%7Bi%3D1%7D%5E%7B%7Cq%7C%7Dd_i%5E2%7D%7D
