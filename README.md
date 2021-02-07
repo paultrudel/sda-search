@@ -102,9 +102,11 @@ Since the Markov chain used for the PageRank model has a finite number of states
 
 The definition of the limiting distribution provides the main way of computing the limiting distribution of a Markov chain. Repeated squaring of the probability matrix will eventually lead to the matrix converging to the limiting distribution. In practice the matrix normally only needs to be squared 50 to 100 times before it converges satisfactorily.
 
-Since the limiting distribution is also stationary an alternate method is to find the limiting/stationary distribution using the stationarity equations. Solving the linear system of equations will yield the limiting distribution.
+Since the limiting distribution is also stationary an alternate method is to find the limiting/stationary distribution using the stationarity equations. Solving the system of linear equations will yield the limiting distribution.
 
 ![Stationarity_Equations]
+
+The final main method of obtaining the limiting distribution is to use Perron-Frobenius theorem and the not so obvious fact that the limiting distribution vector is an eigenvector of the transition probability matrx. The theorem states that any real-valued square matrix with all positive entries will have a unique largest real eigenvalue and the corresponding eigenvector can be chosen to have all positive entries. For transition matrices corresponding to an ergodic Markov chain this eigenvalue is 1 and the corresponding eigenvector is a probability vector that contains the limiting distribution.  
 
 
 
