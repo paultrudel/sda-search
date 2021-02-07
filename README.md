@@ -88,10 +88,14 @@ To summarize:
 
 From this point on M represents the number of pages in the chain and N represents the number of outlinks on a given page.
 
-With this model in place the probability of a user visiting any specific web page must be determined. To do this the model must be represented using a transition probability matrix. A transition probability matrix is an M x M matrix with each entry (i, j) being the probability of transitioning to state j from state i.
+With this model in place the probability of a user visiting any specific web page must be determined. To do this the model must be represented using a transition probability matrix. A transition probability matrix, P, is an M x M matrix with each entry (i, j) being the probability of transitioning to state j from state i.
+
+[!Limiting_Distribution_Definition]
 
 
 
 [IR_Equations]: https://latex.codecogs.com/gif.latex?idf_t%20%3D%20log%28N/df_t%29%20%5C%5C%20%5Cindent%20w_%7Bt%2Cd%7D%20%3D%20log%281%20&plus;%20tf_%7Bt%2Cd%7D%29%20%5Ctimes%20log%28N/df_t%29%20%5C%5C%20%5C%5C%20%5Cindent%20N%20%3D%20the%5C%2Cnumber%5C%2Cof%5C%2Cdocuments%5C%2Cin%5C%2Cthe%5C%2Ccorpus%20%5C%5C%20%5Cindent%20df_t%20%3D%20number%5C%2Cof%20%5C%2Cdocuments%5C%2Cwhich%5C%2Ccontain%5C%2Cterm%5C%3At%20%5C%5C%20%5Cindent%20tf_%7Bt%2Cd%7D%20%3D%20frequency%5C%2Cof%5C%2Cterm%5C%3At%5C%3Ain%5C%2Cdocument%5C%3Ad%20%5C%5C%20%5Cindent%20idf_t%20%3D%20inverse%5C%2Cdocument%5C%2Cfrequence%5C%2Cof%5C%2Cterm%5C%3At%20%5C%5C%20%5Cindent%20w_%7Bt%2Cd%7D%20%3D%20tf%5C%21%5C%21-%5C%21%5C%21idf%5C%3Aweight%5C%2Cof%5C%2Ca%5C%2Cterm
 
 [Cosine_Similarity]: https://latex.codecogs.com/gif.latex?cos%28%5Cvec%7Bq%7D%2C%5Cvec%7Bd%7D%29%3D%5Cfrac%7B%5Cvec%7Bq%7D%20%5Cbullet%20%5Cvec%7Bd%7D%7D%7B%7C%7C%5Cvec%7Bq%7D%7C%7C%5C%3A%7C%7C%5Cvec%7Bd%7D%7C%7C%7D%3D%5Cfrac%7B%5Csum_%7Bi%3D1%7D%5E%7B%7Cq%7C%7D%20q_i%5C%2Cd_i%7D%7B%5Csqrt%7B%5Csum_%7Bi%3D1%7D%5E%7B%7Cq%7C%7Dq_i%5E2%7D%5Csqrt%7B%5Csum_%7Bi%3D1%7D%5E%7B%7Cq%7C%7Dd_i%5E2%7D%7D%20%5C%5C%20%5Cvec%7Bq%7D%3Dquery%5C%2Cvector%20%5C%5C%20%5Cvec%7Bd%7D%3Ddocument%5C%2Cvector
+
+[Limiting_Distribution_Definition]: https://latex.codecogs.com/gif.latex?P%3Dtransition%5C%2Cprobability%5C%2Cmatrix%20%5C%5C%20%5Cindent%20P%5En%3Dn%5C%21-%5C%21step%5C%2Ctransition%5C%2Cprobability%5C%2Cmatrix%20%5C%5C%20%5Cindent%20Let%5C%2C%5Cpi_j%3D%5Clim_%7Bn%5Cto%5Cinfty%7DP_%7Bij%7D%5En%20%5C%5C%20%5Cindent%20%5Cpi_j%5C%2Cis%5C%2Cthe%5C%2Climiting%5C%2Cprobability%5C%2Cof%5C%2Cthe%5C%2Cchain%5C%2Cbeing%5C%2Cin%5C%2Cstate%5C%2Cj%5C%2Cindependent%5C%2Cof%5C%2Cthe%5C%2Cstarting%5C%2Cstate%5C%2Ci%20%5C%5C%20%5Cindent%20%5Cvec%7B%5Cpi%7D%3D%28%5Cpi_0%2C%5Cpi_1%2C...%2C%5Cpi_%7BM-1%7D%29%2C%20%5Csum_%7Bi%3D1%7D%5E%7Bm-1%7D%20%5Cpi_i%3D1%20%5C%5C%20%5Cindent%20%5Cpi%5C%2Cis%5C%2Cthe%5C%2Climiting%5C%2Cdistribution%5C%2Cof%5C%2Cthe%5C%2Cchain
