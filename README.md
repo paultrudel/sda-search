@@ -104,7 +104,7 @@ The definition of the limiting distribution provides the main way of computing t
 
 Since the limiting distribution is also stationary an alternate method is to find the limiting/stationary distribution using the stationarity equations. Solving the linear system of equations will yield the limiting distribution.
 
-![Sationarity_Equations]
+![Stationarity_Equations]
 
 
 
