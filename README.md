@@ -90,7 +90,7 @@ From this point on M represents the number of pages in the chain and N represent
 
 With this model in place the probability of a user visiting any specific web page must be determined. To do this the model must be represented using a transition probability matrix. A transition probability matrix, P, is an M x M matrix with each entry (i, j) being the probability of transitioning to state j from state i.
 
-[!Limiting_Distribution_Definition]
+![Limiting_Distribution_Definition]
 
 
 
