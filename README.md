@@ -67,12 +67,28 @@ The set of documents are seen as a set of vectors in a vector space and the user
 
 ![Cosine_Similarity]
 
-Lucene makes use of both the boolean and vector space models. The boolean model is used to identify potentially relevant documents from the corpus, these documents are then ranked using the vector space model with the cosine similarity between a document and the query being used as the documents score.
+Lucene makes use of both the boolean and vector space models. The boolean model is used to identify potentially relevant documents from the corpus, these documents are then ranked using the vector space model with the cosine similarity between a document and the query being used as the document's score.
 
 
 ### Boosting Document Scores and the PageRank Algorithm
 
-Most search engines that are tasked with returning text based content typically make use of tf-idf weights as the first factor in determining document relevancy. This is a good starting point but ranking documents based solely the content of a page leads to the problem of spam. Creators of web content will seek to include an abundance of "valuable" terms on their pages in order to manipulate the scoring algorithm into giving a high score to their page even if it is not particularly relevant to a user's query. The most famous solution to this problem is the PageRank algorithm which was used in the first generation of the Google search engine.
+Most search engines that are tasked with returning text based content typically make use of tf-idf weights as the first factor in determining document relevancy. This is a good starting point but ranking documents based solely the content of a page leads to the problem of spam. Creators of web content will seek to include an abundance of "valuable" terms on their pages in order to manipulate the scoring algorithm into giving a high score to their page even if it is not particularly relevant to a user's query. The most famous solution to this problem is the PageRank algorithm which was used in the first generation of the Google search engine. 
+The PageRank algorithm solves this problem by modelling a user randomly navigating through a set of webpages as a stochastic process, in particular a Markov chain. Every web page is a state in the chain with each out-link on a page being a transition to another state. To solve the issue of a page having no out-links the "teleport" operation is introduced. This opertion is the equivalent of a user typing a URL into the browser allowing a user to access any page from any other page. The PageRank score of a web page is the probability that a user randomly browsing will end up on that page. A page that is linked to by few or no other pages will have a low probability of being viewed and in turn have a low PageRank score. The PageRank score is used to modify, or "boost", the score given to a page by Lucene. The PageRank score is used as a multiplier meaning that pages with a near zero probability of being randomly viewed will end up with a score that is near zero and therefore be poorly ranked. This approach is highly effective at filtering out spam web pages and other irrelevant web content.
+
+
+### PageRank In-depth
+
+The PageRank algorithm relies on the ability to determine the probability of a user visting a specific web page in a set of pages. To do this the algorithm first models the user as randomly moving through a discrete-time Markov chain (DTMC) with each state in the chain representing a web page. Outlinks on a page represent transitions from that page to other pages in the chain. The assumption is made that the user will click any of these links with equal probability. The "teleport" operation is introduced for two reasons, the first being to solve the problem of pages with no outlinks. This operation allows a user to move to any state from any other state. The next assumption made is that a user will use this operation on any page with probability α, with α usually begin 0.1, and follow an outlink with probability 1-α.
+
+To summarize:
+- A user will either follow an outlink with probability (1-α) or use teleport with probability α
+  - If the user follows an outlink they will follow any outlink with probability 1/N, where N is the number of outlinks on the page
+  - If the user uses teleport they will go to any other web page with probability 1/M, where M is the number of pages in the chain
+- If there are no outlinks on the current page the user will use teleport with probability 1
+
+From this point on M represents the number of pages in the chain and N represents the number of outlinks on a given page.
+
+With this model in place the probability of a user visiting any specific web page must be determined. To do this the model must be represented using a transition probability matrix. A transition probability matrix is an M x M matrix with each entry (i, j) being the probability of transitioning to state j from state i.
 
 
 
