@@ -120,10 +120,10 @@ The first step in the implementation of the PageRank algorithm is the creation o
 
 Creating a transition matrix from the adjacency matrix can be done by using the following rules:
 1. If a row of the adjacency matrix has no 1's then replace each element in the row by 1/M
-2. For all other row do the following
-  - Divide each 1 by the number of 1's in the row
-  - Multiply the resulting matrix by (1-α)
-  - Add α/M to every entry in the matrix
+2. For all other rows do the following
+  * Divide each 1 by the number of 1's in the row
+  * Multiply the resulting matrix by (1-α)
+  * Add α/M to every entry in the matrix
 
 Once the transition probability matrix has been created the limiting distribution of the Markov chain represented by the matrix can be computed. This computing is normally done through repeated squaring of the transition matrix. The values from the distribution are then used to boost the score for their corresponding document.
 
