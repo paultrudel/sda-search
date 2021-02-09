@@ -27,7 +27,7 @@ The summarization algorithm used in this project is an extractive algorithm and 
 1. Split the source text into paragraphs
 2. Split each paragraph into sentences
 3. Create an N x N intersection matrix, where N is the number of sentences in the text
-  i. Each entry (i, j) in the matrix is the intersection value of sentence i with sentence j, the intersection value is the number of words the sentences have in common       divided by the average number of words in the two sentences
+  1. Each entry (i, j) in the matrix is the intersection value of sentence i with sentence j, the intersection value is the number of words the sentences have in common       divided by the average number of words in the two sentences
 4. Map each sentence to it's total intersection value, the total intersection value for a sentence is the row sum corresponding to that sentence
 5. From each paragraph extract the M sentences with highest intersection scores, where M is the number of sentences in the paragraph divided by 5
 6. Sort the sentences collected from each paragraph by the order that they appear in the source text
