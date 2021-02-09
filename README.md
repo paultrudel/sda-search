@@ -21,6 +21,19 @@ To parse the web pages that were visited the Java library JSoup was used. The li
 
 ### Summarizing Text Content
 
+The are two main classes of text summarization techniques; extractive and abstractive. Extractive summarization techniques work by stitching together portions of the source text verbatim, the vast majority of summarization done in practice is extractive. Abstractive methods instead seek to rephrase the source text in the same manner as how humans create summaries. Abstractive summarization is still in its infancy since related NLP problems such as semantic reprsentation and natural language generation are still being worked on.
+
+The summarization algorithm used in this project is an extractive algorithm and functions following these steps:
+1. Split the source text into paragraphs
+2. Split each paragraph into sentences
+3. Create an N x N intersection matrix, where N is the number of sentences in the text
+  - Each entry (i, j) in the matrix is the intersection value of sentence i with sentence j, the intersection value is the number of words the sentences have in common       divided by the average number of words in the two sentences
+4. Map each sentence to it's total intersection value, the total intersection value for a sentence is the row sum corresponding to that sentence
+5. From each paragraph extract the M sentences with highest intersection scores, where M is the number of sentences in the paragraph divided by 5
+6. Sort the sentences collected from each paragraph by the order that they appear in the source text
+
+The primary assumption made by this algorithm is that any sentence that has a high degree of intersection with all other sentences most likely contains a lot of information. Stitching together a collection of these high information sentences should then lead to an adequate summarization of the source content. Possible improvements to this algorithm could be made by removing stop words from consideration in the computation of sentence to sentence intersection values.
+
 
 ## Indexing the Content
 
@@ -49,17 +62,13 @@ One of the most basic ways of identifying potentially relevant documents from th
 Instead of returning a set of documents satisfying a query return an ordering of the top documents from the collection for the query. This deals with the problem of too many results since only the top 10 or 100 documents for instance will be returned. This introduces the problem of how to score documents with term frequency and weighting being the most fundamental method of doing so.
 The simplest way to score a document is to compute the score of as the frequency, or the number of times, the query term in the document. The problem is that document relevancy does not increase proportionally with term frequency. Another issue is that not all terms are equal, some terms have little or no impact in determining relevance. The solution is to measure the term frequency using the inverse document frequency and compute the tf-idf weight for each term-document pair.
 
-
 ![IR_Equations]
 
-
 The tf-idf weight is the best known weighting scheme for information retrieval.
-
 
 ### Vector Space Model
 
 Each document in the corpus can be viewed as an N-dimensional vector, where N is the number of distinct terms, with each entry in the vector being a tf-idf weight. Any term that does not appear in the document will have a weight of zero in the corresponding vector entry. To improve the speed of computations, in practice only terms appearing in the user's query are considered. Therefore, each document is viewed as a Q-dimensional vector, where Q is the number of distinct terms in the query.
-
 
 ### Scoring Documents
 
@@ -69,12 +78,10 @@ The set of documents are seen as a set of vectors in a vector space and the user
 
 Lucene makes use of both the boolean and vector space models. The boolean model is used to identify potentially relevant documents from the corpus, these documents are then ranked using the vector space model with the cosine similarity between a document and the query being used as the document's score.
 
-
 ### Boosting Document Scores and the PageRank Algorithm
 
 Most search engines that are tasked with returning text based content typically make use of tf-idf weights as the first factor in determining document relevancy. This is a good starting point but ranking documents based solely the content of a page leads to the problem of spam. Creators of web content will seek to include an abundance of "valuable" terms on their pages in order to manipulate the scoring algorithm into giving a high score to their page even if it is not particularly relevant to a user's query. The most famous solution to this problem is the PageRank algorithm which was used in the first generation of the Google search engine. 
 The PageRank algorithm solves this problem by modelling a user randomly navigating through a set of webpages as a stochastic process, in particular a Markov chain. Every web page is a state in the chain with each out-link on a page being a transition to another state. To solve the issue of a page having no out-links the "teleport" operation is introduced. This opertion is the equivalent of a user typing a URL into the browser allowing a user to access any page from any other page. The PageRank score of a web page is the probability that a user randomly browsing will end up on that page. A page that is linked to by few or no other pages will have a low probability of being viewed and in turn have a low PageRank score. The PageRank score is used to modify, or "boost", the score given to a page by Lucene. The PageRank score is used as a multiplier meaning that pages with a near zero probability of being randomly viewed will end up with a score that is near zero and therefore be poorly ranked. This approach is highly effective at filtering out spam web pages and other irrelevant web content.
-
 
 ### PageRank In-depth
 
@@ -106,7 +113,20 @@ Since the limiting distribution is also stationary an alternate method is to fin
 
 ![Stationarity_Equations]
 
-The final main method of obtaining the limiting distribution is to use Perron-Frobenius theorem and the not so obvious fact that the limiting distribution vector is an eigenvector of the transition probability matrx. The theorem states that any real-valued square matrix with all positive entries will have a unique largest real eigenvalue and the corresponding eigenvector can be chosen to have all positive entries. For transition matrices corresponding to an ergodic Markov chain this eigenvalue is 1 and the corresponding eigenvector is a probability vector that contains the limiting distribution.  
+The final main method of obtaining the limiting distribution is to use Perron-Frobenius theorem and the not so obvious fact that the limiting distribution vector is an eigenvector of the transition probability matrx. The theorem states that any real-valued square matrix with all positive entries will have a unique largest real eigenvalue and the corresponding eigenvector can be chosen to have all positive entries. For transition matrices corresponding to an ergodic Markov chain this eigenvalue is 1 and the corresponding eigenvector is a probability vector that contains the limiting distribution.
+
+### PageRank in Practice
+
+The first step in the implementation of the PageRank algorithm is the creation of a crawl graph. During web crawling a graph is maintained which adds each of the pages visited by the crawler as a vertex in the graph. An edge is added between the newly visited page and the parent page. Once crawling is complete the graph can be transformed into an adjacency matrix. The next step is to produce a transition probability matrix from this adjacency matrix. 
+
+Creating a transition matrix from the adjacency matrix can be done by using the following rules:
+1. If a row of the adjacency matrix has no 1's then replace each element in the row by 1/M
+2. For all other row do the following
+  - Divide each 1 by the number of 1's in the row
+  - Multiply the resulting matrix by (1-α)
+  - Add α/M to every entry in the matrix
+
+Once the transition probability matrix has been created the limiting distribution of the Markov chain represented by the matrix can be computed. This computing is normally done through repeated squaring of the transition matrix. The values from the distribution are then used to boost the score for their corresponding document.
 
 
 
