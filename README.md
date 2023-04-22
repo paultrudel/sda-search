@@ -17,7 +17,7 @@ To facilitate web crawling the Java library Crawler4j was used. This library is 
 
 ## Parsing Web Content
 
-To parse the web pages that were visited the Java library JSoup was used. The library allows the used to select elements from the web content by html tag, such as paragraph <p> or image <img> tags. Once the elements is selected the used can then extract the information that commonly contained in such tags. Such as text for a simple paragraph tag, or the image source and alternate attributes for an image tag. Once parsed these web pages are then stored as a project specific document, 'SDADocument', in the database.
+To parse the web pages that were visited the Java library JSoup was used. The library allows the user to select elements from the web content by html tag, such as paragraph <p> or image <img> tags. Once the elements are selected the user can then extract the information that is commonly contained in such tags. Such as text for a simple paragraph tag, or the image `src` and `alt` attributes for an image tag. Once parsed these web pages are then stored as a project specific document, `SDADocument`, in the database.
 
 ### Summarizing Text Content
 
