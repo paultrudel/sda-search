@@ -41,11 +41,11 @@ Apache Lucene was used for the indexing and search purposes of this application.
 ### How Lucene Stores Information
 
 Terminology:
-- A SDADocument is a project specific database entity which models a web page
+- A `SDADocument` is a project specific database entity which models a web page
 - A document refers to a Lucene specific term for a unit of indexing/search which is made up of a group of information fields  
 
-For this project approximately 10,000 SDADocuments make up the document corpus. Each SDADocument contains a body of text and job of the index is to store information about this text content in a manner that allows for fast lookup of which documents contain a particular term. To do this Lucene stores this term-document information in an inverted index which maps each distinct term in the corpus to a list of documents, unqiuely identified by a serial number. Each entry in this associated list of documents is tuple containing the document's unqiue identified and the position in the document where the term is found. 
-The advatage of storing information this way is that the memory needed for storage is very small compared to the actual size of a document's content and grows slowly as more documents are added to the index. The lookup time is also quite fast since it has a time complexity of approximately O(log n), where n is the number of distinct terms in the corpus. The process of building the document index also involves other common NLP techniques such as the dropping of stop words, stemming, and lemmatization.
+For this project approximately 10,000 `SDADocuments` make up the document corpus. Each `SDADocument` contains a body of text and job of the index is to store information about this text content in a manner that allows for fast lookup of which documents contain a particular term. To do this Lucene stores this term-document information in an inverted index which maps each distinct term in the corpus to a list of documents, unqiuely identified by a serial number. Each entry in this associated list of documents is a tuple containing the document's unqiue identifier and the position in the document where the term is found. 
+The advatage of storing information this way is that the memory needed for storage is very small compared to the actual size of a document's content and grows slowly as more documents are added to the index. The lookup time is also quite fast since it has a time complexity of approximately `O(log n)`, where `n` is the number of distinct terms in the corpus. The process of building the document index also involves other common NLP techniques such as the dropping of stop words, stemming, and lemmatization.
 
 
 ## Retrieving the Content
@@ -59,7 +59,7 @@ One of the most basic ways of identifying potentially relevant documents from th
 ### Ranked Retrieval
 
 Instead of returning a set of documents satisfying a query return an ordering of the top documents from the collection for the query. This deals with the problem of too many results since only the top 10 or 100 documents for instance will be returned. This introduces the problem of how to score documents with term frequency and weighting being the most fundamental method of doing so.
-The simplest way to score a document is to compute the score of as the frequency, or the number of times, the query term in the document. The problem is that document relevancy does not increase proportionally with term frequency. Another issue is that not all terms are equal, some terms have little or no impact in determining relevance. The solution is to measure the term frequency using the inverse document frequency and compute the tf-idf weight for each term-document pair.
+The simplest way to score a document is to compute the score as the frequency, or the number of times, the query term is present in the document. The problem is that document relevancy does not increase proportionally with term frequency. Another issue is that not all terms are equal, some terms have little or no impact in determining relevance. The solution is to measure the term frequency using the inverse document frequency and compute the tf-idf weight for each term-document pair.
 
 ![IR_Equations]
 
@@ -67,7 +67,7 @@ The tf-idf weight is the best known weighting scheme for information retrieval.
 
 ### Vector Space Model
 
-Each document in the corpus can be viewed as an N-dimensional vector, where N is the number of distinct terms, with each entry in the vector being a tf-idf weight. Any term that does not appear in the document will have a weight of zero in the corresponding vector entry. To improve the speed of computations, in practice only terms appearing in the user's query are considered. Therefore, each document is viewed as a Q-dimensional vector, where Q is the number of distinct terms in the query.
+Each document in the corpus can be viewed as an N-dimensional vector, where `N` is the number of distinct terms, with each entry in the vector being a tf-idf weight. Any term that does not appear in the document will have a weight of zero in the corresponding vector entry. To improve the speed of computations, in practice only terms appearing in the user's query are considered. Therefore, each document is viewed as a Q-dimensional vector, where `Q` is the number of distinct terms in the query.
 
 ### Scoring Documents
 
@@ -84,17 +84,17 @@ The PageRank algorithm solves this problem by modelling a user randomly navigati
 
 ### PageRank In-depth
 
-The PageRank algorithm relies on the ability to determine the probability of a user visting a specific web page in a set of pages. To do this the algorithm first models the user as randomly moving through a discrete-time Markov chain (DTMC) with each state in the chain representing a web page. Outlinks on a page represent transitions from that page to other pages in the chain. The assumption is made that the user will click any of these links with equal probability. The "teleport" operation is introduced for two reasons, the first being to solve the problem of pages with no outlinks. This operation allows a user to move to any state from any other state. The next assumption made is that a user will use this operation on any page with probability α, with α usually begin 0.1, and follow an outlink with probability 1-α.
+The PageRank algorithm relies on the ability to determine the probability of a user visting a specific web page in a set of pages. To do this the algorithm first models the user as randomly moving through a discrete-time Markov chain (DTMC) with each state in the chain representing a web page. Outlinks on a page represent transitions from that page to other pages in the chain. The assumption is made that the user will click any of these links with equal probability. The "teleport" operation is introduced for two reasons, the first being to solve the problem of pages with no outlinks. This operation allows a user to move to any state from any other state. The next assumption made is that a user will use this operation on any page with probability `α`, with α usually begin 0.1, and follow an outlink with probability `1-α`.
 
 To summarize:
-- A user will either follow an outlink with probability (1-α) or use teleport with probability α, assume α is 0.1
-  - If the user follows an outlink they will follow any outlink with probability 1/N, where N is the number of outlinks on the page
-  - If the user uses teleport they will go to any other web page with probability 1/M, where M is the number of pages in the chain
+- A user will either follow an outlink with probability `(1-α)` or use teleport with probability `α`, assume `α` is 0.1
+  - If the user follows an outlink they will follow any outlink with probability 1/N, where `N` is the number of outlinks on the page
+  - If the user uses teleport they will go to any other web page with probability 1/M, where `M` is the number of pages in the chain
 - If there are no outlinks on the current page the user will use teleport with probability 1
 
-From this point on M represents the number of pages in the chain and N represents the number of outlinks on a given page.
+From this point on `M` represents the number of pages in the chain and `N` represents the number of outlinks on a given page.
 
-With this model in place the probability of a user visiting any specific web page must be determined. The limiting distribution of the chain provides these probilities. To obtain this distribution the model must be represented using a transition probability matrix. A transition probability matrix, P, is an M x M matrix with each entry (i, j) being the probability of transitioning to state j from state i.
+With this model in place the probability of a user visiting any specific web page must be determined. The limiting distribution of the chain provides these probilities. To obtain this distribution the model must be represented using a transition probability matrix. A transition probability matrix, `P`, is an `M x M` matrix with each entry `(i, j)` being the probability of transitioning to state `j` from state `i`.
 
 ![Limiting_Distribution_Definition]
 
@@ -104,7 +104,7 @@ Expanding on the definition of the limiting distribution we obtain the stationar
 
 ![Stationary_Distribution_Definition]
 
-Since the Markov chain used for the PageRank model has a finite number of states the limiting distribution of the chain is also stationary. This provides and additional way, through the use of the chain's stationary equations, to compute the desired probabilities.
+Since the Markov chain used for the PageRank model has a finite number of states the limiting distribution of the chain is also stationary. This provides an additional way, through the use of the chain's stationary equations, to compute the desired probabilities.
 
 The definition of the limiting distribution provides the main way of computing the limiting distribution of a Markov chain. Repeated squaring of the probability matrix will eventually lead to the matrix converging to the limiting distribution. In practice the matrix normally only needs to be squared 50 to 100 times before it converges satisfactorily.
 
