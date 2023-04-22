@@ -12,7 +12,7 @@ Each step in this process has its own complexities and in particular the retriev
 
 ## Crawling the Web
 
-To facilitate web crawling the Java library Crawler4j was used. This library is simple to used and provides all of the tools necessary for basic web crawling. Three seed domains were used as starting points for thge crawling and a maximum of 10,000 web pages were visited and parsed.
+To facilitate web crawling the Java library Crawler4j was used. This library is simple to used and provides all of the tools necessary for basic web crawling. Three seed domains were used as starting points for the crawling and a maximum of 10,000 web pages were visited and parsed.
 
 
 ## Parsing Web Content
